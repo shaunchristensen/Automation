@@ -7,35 +7,52 @@ import java.util.concurrent.TimeUnit;
 import org.junit.runners.Parameterized;
 import org.junit.runners.model.RunnerScheduler;
 
-public class Parallelized extends Parameterized {
+public class Parallelized extends Parameterized
+{
+    private static class ThreadPoolScheduler implements RunnerScheduler
+    {
+        // fields
 
-  private static class ThreadPoolScheduler implements RunnerScheduler {
-    private ExecutorService executor;
+        private ExecutorService executorService;
 
-    public ThreadPoolScheduler() {
-      String threads = System.getProperty("junit.parallel.threads", "16");
-      int numThreads = Integer.parseInt(threads);
-      executor = Executors.newFixedThreadPool(numThreads);
+        // constructors
+
+        public ThreadPoolScheduler()
+        {
+            String stringThreads = System.getProperty("junit.parallel.threads", "16");
+            int intThreads = Integer.parseInt(stringThreads);
+            executorService = Executors.newFixedThreadPool(intThreads);
+        }
+
+        // methods
+
+        @Override
+        public void finished()
+        {
+            executorService.shutdown();
+
+            try
+            {
+                executorService.awaitTermination(5, TimeUnit.MINUTES);
+            }
+            catch (InterruptedException e)
+            {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override
+        public void schedule(Runnable r)
+        {
+            executorService.submit(r);
+        }
     }
 
-    @Override
-    public void finished() {
-      executor.shutdown();
-      try {
-        executor.awaitTermination(10, TimeUnit.MINUTES);
-      } catch (InterruptedException exc) {
-        throw new RuntimeException(exc);
-      }
-    }
+    // constructors
 
-    @Override
-    public void schedule(Runnable childStatement) {
-      executor.submit(childStatement);
+    public Parallelized(Class<?> c) throws Throwable
+    {
+        super(c);
+        setScheduler(new ThreadPoolScheduler());
     }
-  }
-
-  public Parallelized(Class<?> klass) throws Throwable {
-    super(klass);
-    setScheduler(new ThreadPoolScheduler());
-  }
 }
