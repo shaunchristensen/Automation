@@ -1,189 +1,145 @@
 package tests;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Collection;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.Augmenter;
-import org.openqa.selenium.remote.DesiredCapabilities;
+
+import automation.Parallelized;
+import automation.WebDrivers;
 
 @RunWith(Parallelized.class)
-public class PTest {
-//  private String platform;
-  private String browserName;
-//  private String browserVersion;
-private static ChromeDriver chromeDriver;
-private static EdgeDriver edgeDriver;
-private static FirefoxDriver firefoxDriver;
-private static InternetExplorerDriver internetExplorerDriver;
-
-
-@Parameterized.Parameters
-  public static LinkedList<String[]> getEnvironments() throws Exception {
-    LinkedList<String[]> env = new LinkedList<String[]>();
-    env.add(new String[]{Platform.WINDOWS.toString(), "Chrome", "27"});
-    env.add(new String[]{Platform.WINDOWS.toString(), "Edge", "1"});
-    env.add(new String[]{Platform.WINDOWS.toString(),"Firefox","20"});
-    env.add(new String[]{Platform.WINDOWS.toString(),"Internet Explorer","9"});
-
-    //add more browsers here
-
-    return env;
-  }
-
-   public PTest(String platform, String browserName, String browserVersion)
+public class PTest
 {
-//    this.platform = platform;
-    this.browserName = browserName;
-//    this.browserVersion = browserVersion;
-  }
+	// fields
 
-  private WebDriver driver;
+	private String stringBrowser;
+	private WebDriver webDriver;
 
-  @Before
-  public void setUp() throws Exception {
-    DesiredCapabilities capability = new DesiredCapabilities();
-//    capability.setCapability("platform", platform);
-    capability.setCapability("browser", browserName);
-//    capability.setCapability("browserVersion", browserVersion);
+	// constructors
 
-    if (browserName.equalsIgnoreCase("Chrome"))
-    {
-        driver = chromeDriver;
-    }
-    else if (browserName.equalsIgnoreCase("Edge"))
-    {
-//        driver = edgeDriver;
-    }
-    else if (browserName.equalsIgnoreCase("Firefox"))
-    {
-        driver = firefoxDriver;
-    }
-    else if (browserName.equalsIgnoreCase("Internet Explorer"))
-    {
-        driver = internetExplorerDriver;
-    }
-  }
+	public PTest(String browser)
+	{
+		stringBrowser = browser;
+	}
 
-  @BeforeClass
-  public void initChromeVariables() {
-      System.setProperty("webdriver.chrome.driver", "Resources/Chrome/chromedriver.exe");
-      // fix later
-//      System.setProperty("webdriver.edge.driver", "Resources/Edge/chromedriver.exe");
-      System.setProperty("webdriver.ie.driver", "Resources/Internet Explorer/IEDriverServer.exe");
+	// methods
 
-      chromeDriver = new ChromeDriver();
-      chromeDriver.manage().window().maximize();
-//      edgeDriver = new EdgeDriver();
-//      edgeDriver.manage().window().maximize();
-      firefoxDriver = new FirefoxDriver();
-      firefoxDriver.manage().window().maximize();
-      internetExplorerDriver = new InternetExplorerDriver();
-      internetExplorerDriver.manage().window().maximize();
-  }
+	@After
+	public void removeThreadLocal()
+	{
+//		WebDrivers.getWebDrivers().removeThreadLocal(stringBrowser);
+	}
+
+	@AfterClass
+	public static void quitWebDrivers()
+	{
+		WebDrivers.quitWebDrivers();
+	}
+
+	@Before
+	public void getWebDriver()
+	{
+		webDriver = WebDrivers.getWebDrivers().getWebDriver(stringBrowser);
+	}
+
+	@Parameters(name = "{0}")
+	public static Collection<Object[]> getBrowsers()
+	{
+		return WebDrivers.getBrowsers();
+	}
 
   @Test
   public void testSimple() throws Exception {
-    driver.get("http://www.google.com");
-    WebElement element = driver.findElement(By.name("q"));
+	  webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
+	  ArrayList<String> tabs = new ArrayList<String> (webDriver.getWindowHandles());
+
+	  webDriver.switchTo().window(tabs.get(tabs.size() - 1));
+	  webDriver.get("http://www.google.com");
+    WebElement element = webDriver.findElement(By.id("lst-ib"));
     element.sendKeys("inthinc");
     element.submit();
-    driver = new Augmenter().augment(driver);
-    File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-    try {
-      FileUtils.copyFile(srcFile, new File("Screenshot.png"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+//	  driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "w");
+    System.out.println("testSimple " + stringBrowser);
   }
 
   @Test
   public void testSimple2() throws Exception {
-    driver.get("http://qa.inthinc.com");
-    WebElement element = driver.findElement(By.name("username"));
-    element.sendKeys("automation");
-    element = driver.findElement(By.name("password"));
-    element.sendKeys("T@k3Th3Wh33l");
+	  webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
+	  System.out.println(1);
+	  ArrayList<String> tabs = new ArrayList<String> (webDriver.getWindowHandles());
+	  System.out.println(2);
+
+	  webDriver.switchTo().window(tabs.get(tabs.size() - 1));
+	  System.out.println(3);
+	  webDriver.get("http://qa.inthinc.com");
+	  System.out.println(4);
+    WebElement element = webDriver.findElement(By.id("username"));
+	  System.out.println(5);
+    element.sendKeys("schristensen");
+	  System.out.println(6);
+    element = webDriver.findElement(By.id("password"));
+	  System.out.println(7);
+    element.sendKeys("pushit955");
+	  System.out.println(8);
     element.submit();
-    driver = new Augmenter().augment(driver);
-    File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-    try {
-      FileUtils.copyFile(srcFile, new File("Screenshot2.png"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+	  System.out.println(9);
+	  webDriver.get("https://qa.inthinc.com/tiwipro/logout");
+	  System.out.println(10);
+	//  driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "w");
+    System.out.println("testSimple2 " + stringBrowser);
   }
 
   @Test
   public void testSimple3() throws Exception {
-    driver.get("http://www.google.com");
-    WebElement element = driver.findElement(By.name("q"));
+	  webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
+	  ArrayList<String> tabs = new ArrayList<String> (webDriver.getWindowHandles());
+
+	  webDriver.switchTo().window(tabs.get(tabs.size() - 1));
+	  webDriver.get("http://www.google.com");
+    WebElement element = webDriver.findElement(By.id("lst-ib"));
     element.sendKeys("football");
     element.submit();
-    driver = new Augmenter().augment(driver);
-    File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-    try {
-      FileUtils.copyFile(srcFile, new File("Screenshot3.png"));
-    } catch (IOException e) {
-      e.printStackTrace();
+//	  driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "w");
+    System.out.println("testSimple3 " + stringBrowser);
     }
-  }
 
   @Test
   public void testSimple4() throws Exception {
-    driver.get("http://qa.inthinc.com");
-    WebElement element = driver.findElement(By.name("username"));
-    element.sendKeys("automation");
-    element = driver.findElement(By.name("automation"));
-    element.sendKeys("T@k3Th3Wh33l");
+	  webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
+	  ArrayList<String> tabs = new ArrayList<String> (webDriver.getWindowHandles());
+
+	  webDriver.switchTo().window(tabs.get(tabs.size() - 1));
+	  webDriver.get("http://qa.inthinc.com");
+    WebElement element = webDriver.findElement(By.id("username"));
+    element.sendKeys("schristensen");
+    element = webDriver.findElement(By.id("password"));
+    element.sendKeys("pushit955");
     element.submit();
-    driver = new Augmenter().augment(driver);
-    File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-    try {
-      FileUtils.copyFile(srcFile, new File("Screenshot4.png"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    webDriver.get("https://qa.inthinc.com/tiwipro/logout");
+//	  driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "w");
+    System.out.println("testSimple4 " + stringBrowser);
   }
 
   @Test
   public void testSimple5() throws Exception {
-    driver.get("http://www.google.com");
-    WebElement element = driver.findElement(By.name("q"));
+	  webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
+	  ArrayList<String> tabs = new ArrayList<String> (webDriver.getWindowHandles());
+
+	  webDriver.switchTo().window(tabs.get(tabs.size() - 1));
+	  webDriver.get("http://www.google.com");
+    WebElement element = webDriver.findElement(By.id("lst-ib"));
     element.sendKeys("cats");
     element.submit();
-    driver = new Augmenter().augment(driver);
-    File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-    try {
-      FileUtils.copyFile(srcFile, new File("Screenshot5.png"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-  @AfterClass
-  public void tearDown() throws Exception {
-      chromeDriver.quit();
-//      edgeDriver.quit();
-      firefoxDriver.quit();
-      internetExplorerDriver.quit();
+    System.out.println("testSimple5 " + stringBrowser);
   }
 }

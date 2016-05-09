@@ -1,7 +1,9 @@
 package automation;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -11,106 +13,144 @@ public class WebDrivers
 {
     // fields
 
-    private static WebDrivers webDrivers = new WebDrivers();
+	private static ChromeDriver chromeDriver;
+	private static EdgeDriver edgeDriver;
+	private static FirefoxDriver firefoxDriver;
+	private static InternetExplorerDriver internetExplorerDriver;
 
-    ThreadLocal<WebDriver> chromeDriver = new ThreadLocal<WebDriver>()
-    {
-        @Override
-        protected WebDriver initialValue()
-        {
-            return new ChromeDriver();
-        }
-    };
+	private static ThreadLocal<WebDriver> threadLocalChrome = new ThreadLocal<WebDriver>()
+	{
+    	@Override
+    	protected WebDriver initialValue()
+    	{
+            System.setProperty("webdriver.chrome.driver", "Resources/Chrome/chromedriver.exe");
 
-    ThreadLocal<WebDriver> edgeDriver = new ThreadLocal<WebDriver>()
-    {
-        @Override
-        protected WebDriver initialValue()
-        {
-            return new EdgeDriver();
-        }
-    };
+            chromeDriver = new ChromeDriver();
+    	    chromeDriver.manage().window().maximize();
 
-    ThreadLocal<WebDriver> firefoxDriver = new ThreadLocal<WebDriver>()
-    {
-        @Override
-        protected WebDriver initialValue()
-        {
-            return new FirefoxDriver();
-        }
-    };
+    	    return chromeDriver;
+    	}
+	};
 
-    ThreadLocal<WebDriver> internetExplorerDriver = new ThreadLocal<WebDriver>()
-    {
-        @Override
-        protected WebDriver initialValue()
-        {
-            return new InternetExplorerDriver();
-        }
-    };
+    private static ThreadLocal<WebDriver> threadLocalEdge = new ThreadLocal<WebDriver>()
+	{
+    	@Override
+    	protected WebDriver initialValue()
+    	{
+            System.setProperty("webdriver.edge.driver", "Resources/Edge/MicrosoftWebDriver.exe");
+
+            edgeDriver = new EdgeDriver();
+    		edgeDriver.manage().window().maximize();
+
+    	    return edgeDriver;
+    	}
+	};
+
+    private static ThreadLocal<WebDriver> threadLocalFirefox = new ThreadLocal<WebDriver>()
+	{
+    	@Override
+    	protected WebDriver initialValue()
+    	{
+    		firefoxDriver = new FirefoxDriver();
+    		firefoxDriver.manage().window().maximize();
+
+    	    return firefoxDriver;
+    	}
+	};
+
+    private static ThreadLocal<WebDriver> threadLocalInternetExplorer = new ThreadLocal<WebDriver>()
+	{
+    	@Override
+    	protected WebDriver initialValue()
+    	{
+            System.setProperty("webdriver.ie.driver", "Resources/Internet Explorer/IEDriverServer.exe");
+
+            internetExplorerDriver = new InternetExplorerDriver();
+    		internetExplorerDriver.manage().window().maximize();
+
+    	    return internetExplorerDriver;
+    	}
+	};
+
+	private static WebDrivers webDrivers = new WebDrivers();
 
     // constructors
 
     private WebDrivers()
     {
-    }
+	}
 
     // methods
+
+    public static Collection<Object[]> getBrowsers()
+    {
+		return Arrays.asList(new Object[][]
+		{
+			{ "Chrome" },
+			{ "Edge" },
+			{ "Firefox" },
+			{ "Internet Explorer" }
+		});
+    }
+
+    public WebDriver getWebDriver(String browser)
+    {
+    	if (browser.equalsIgnoreCase("Chrome"))
+        {
+        	return threadLocalChrome.get();
+        }
+        else if (browser.equalsIgnoreCase("Edge"))
+        {
+        	return threadLocalEdge.get();
+        }
+        else if (browser.equalsIgnoreCase("Firefox"))
+        {
+        	return threadLocalFirefox.get();
+        }
+        else if (browser.equalsIgnoreCase("Internet Explorer"))
+        {
+        	return threadLocalInternetExplorer.get();
+        }
+        else
+        {
+        	return null;
+        }
+    }
 
     public static WebDrivers getWebDrivers()
     {
         return webDrivers;
     }
 
-    public WebDriver getWebDriver(String s)
+    public static void quitWebDrivers()
     {
-        if (s.equalsIgnoreCase("Chrome"))
-        {
-            return chromeDriver.get();
-        }
-        else if (s.equalsIgnoreCase("Edge"))
-        {
-            return edgeDriver.get();
-        }
-        else if (s.equalsIgnoreCase("Firefox"))
-        {
-            return firefoxDriver.get();
-        }
-        else if (s.equalsIgnoreCase("Internet Explorer"))
-        {
-            return internetExplorerDriver.get();
-        }
-        else
-        {
-            throw new WebDriverException("The browser is unsupported.");
-        }
+    	chromeDriver.quit();
+    	edgeDriver.quit();
+    	firefoxDriver.quit();
+    	internetExplorerDriver.quit();
     }
 
-    public void removeWebDriver(String s)
+    public void removeThreadLocal(String browser)
     {
-        if (s.equalsIgnoreCase("Chrome"))
+        if (browser.equalsIgnoreCase("Chrome"))
         {
-            chromeDriver.get().quit();
-            chromeDriver.remove();
+        	threadLocalChrome.get().quit();
+        	threadLocalChrome.remove();
         }
-        else if (s.equalsIgnoreCase("Edge"))
+        else if (browser.equalsIgnoreCase("Edge"))
         {
-            edgeDriver.get().quit();
-            edgeDriver.remove();
+        	threadLocalEdge.get().quit();
+        	threadLocalEdge.remove();
         }
-        else if (s.equalsIgnoreCase("Firefox"))
+        else if (browser.equalsIgnoreCase("Firefox"))
         {
-            firefoxDriver.get().quit();
-            firefoxDriver.remove();
+        	threadLocalFirefox.get().quit();
+        	threadLocalFirefox.remove();
         }
-        else if (s.equalsIgnoreCase("Internet Explorer"))
+        else if (browser.equalsIgnoreCase("Internet Explorer"))
         {
-            internetExplorerDriver.get().quit();
-            internetExplorerDriver.remove();
-        }
-        else
-        {
-            throw new WebDriverException("The browser is unsupported.");
+        	threadLocalInternetExplorer.get().quit();
+        	threadLocalInternetExplorer.remove();
         }
     }
 }

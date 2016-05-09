@@ -17,42 +17,45 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
-/**
- * Parallel Selenium WebDriver example for http://stackoverflow.com/questions/30353996/selenium-and-parallelized-junit-webdriver-instances
- * Parallelized class is like http://hwellmann.blogspot.de/2009/12/running-parameterized-junit-tests-in.html
- */
-@RunWith(Parameterized.class)
-public class TestTest {
+import automation.Parallelized;
 
-    /** Available driver types */
+@RunWith(Parallelized.class)
+public class TestTest
+{
     enum WebDriverType {
-        CHROME,
-        FIREFOX
+    	Chrome, Edge, Firefox, InternetExplorer
     }
 
     /** Create WebDriver instances for specified type */
     static class WebDriverFactory {
         static WebDriver create(WebDriverType type) {
-            WebDriver driver;
-            switch (type) {
-            case FIREFOX:
+            WebDriver driver = null;
+            System.out.println(type);
+            if (type == WebDriverType.Chrome)
+            {
+            	driver = new ChromeDriver();
+            }
+            else if (type == WebDriverType.Edge)
+            {
+                driver = new EdgeDriver();
+            }
+            else if (type == WebDriverType.Firefox)
+            {
                 driver = new FirefoxDriver();
-                break;
-            case CHROME:
-                driver = new ChromeDriver();
-                break;
-            default:
-                throw new IllegalStateException();
+            }
+            else if (type == WebDriverType.InternetExplorer)
+            {
+            	driver = new InternetExplorerDriver();
             }
             log(driver, "created");
             return driver;
         }
     }
 
-    // for description how to user Parametrized
-    // see: https://github.com/junit-team/junit/wiki/Parameterized-tests
     @Parameterized.Parameter
     public WebDriverType currentDriverType;
 
@@ -60,8 +63,10 @@ public class TestTest {
     @Parameterized.Parameters(name= "{0}")
     public static Collection<Object[]> driverTypes() {
         return Arrays.asList(new Object[][] {
-                { WebDriverType.CHROME },
-                { WebDriverType.FIREFOX }
+            { WebDriverType.Chrome},
+            { WebDriverType.Edge },
+            { WebDriverType.Firefox},
+                { WebDriverType.InternetExplorer}
             });
     }
 
@@ -71,6 +76,8 @@ public class TestTest {
     @BeforeClass
     public static void initChromeVariables() {
         System.setProperty("webdriver.chrome.driver", "Resources/Chrome/chromedriver.exe");
+        System.setProperty("webdriver.edge.driver", "Resources/Edge/MicrosoftWebDriver.exe");
+        System.setProperty("webdriver.ie.driver", "Resources/Internet Explorer/IEDriverServer.exe");
     }
 
     @Before
@@ -124,5 +131,4 @@ public class TestTest {
     private static void log(WebDriver driver, String message) {
         System.out.println(String.format("%15s, %15s: %s", Thread.currentThread().getName(), driver.getClass().getName(), message));
     }
-
 }
