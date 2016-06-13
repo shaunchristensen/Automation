@@ -1,6 +1,12 @@
 package tests;
 
-import java.util.ArrayList;
+import automation.Parallelized;
+
+import browsers.Browser;
+import browsers.Browsers;
+
+import static org.junit.Assert.*;
+
 import java.util.Collection;
 
 import org.junit.After;
@@ -10,12 +16,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import automation.Parallelized;
-import automation.WebDrivers;
 
 @RunWith(Parallelized.class)
 public class PTest
@@ -23,7 +23,7 @@ public class PTest
 	// fields
 
 	private String stringBrowser;
-	private WebDriver webDriver;
+	private Browser browser;
 
 	// constructors
 
@@ -37,109 +37,77 @@ public class PTest
 	@After
 	public void removeThreadLocal()
 	{
-//		WebDrivers.getWebDrivers().removeThreadLocal(stringBrowser);
+//		Browsers.getBrowsers().removeThreadLocal(stringBrowser);
 	}
 
 	@AfterClass
-	public static void quitWebDrivers()
+	public static void quitBrowsers()
 	{
-		WebDrivers.quitWebDrivers();
+	    Browsers.quitBrowsers();
 	}
 
 	@Before
-	public void getWebDriver()
+	public void getBrowser()
 	{
-		webDriver = WebDrivers.getWebDrivers().getWebDriver(stringBrowser);
+	    browser = Browsers.getBrowsers().getBrowser(stringBrowser);
 	}
 
 	@Parameters(name = "{0}")
 	public static Collection<Object[]> getBrowsers()
 	{
-		return WebDrivers.getBrowsers();
+		return Browsers.getBrowserNames();
 	}
 
-  @Test
-  public void testSimple() throws Exception {
-	  webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
-	  ArrayList<String> tabs = new ArrayList<String> (webDriver.getWindowHandles());
+    @Test
+    public void logInUtility() throws Exception
+    {
+        browser.setURL("https://qa.inthinc.com/tiwiproutil");
+        browser.setText(By.id("j_username"), "automation");
+        browser.setText(By.id("j_password"), "password");
+        browser.click(By.xpath("//button[@type='submit']"));
 
-	  webDriver.switchTo().window(tabs.get(tabs.size() - 1));
-	  webDriver.get("http://www.google.com");
-    WebElement element = webDriver.findElement(By.id("lst-ib"));
-    element.sendKeys("inthinc");
-    element.submit();
-//	  driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "w");
-    System.out.println("testSimple " + stringBrowser);
-  }
+        assertEquals("inthinc Utilities", browser.getTitle());
 
-  @Test
-  public void testSimple2() throws Exception {
-	  webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
-	  System.out.println(1);
-	  ArrayList<String> tabs = new ArrayList<String> (webDriver.getWindowHandles());
-	  System.out.println(2);
-
-	  webDriver.switchTo().window(tabs.get(tabs.size() - 1));
-	  System.out.println(3);
-	  webDriver.get("http://qa.inthinc.com");
-	  System.out.println(4);
-    WebElement element = webDriver.findElement(By.id("username"));
-	  System.out.println(5);
-    element.sendKeys("schristensen");
-	  System.out.println(6);
-    element = webDriver.findElement(By.id("password"));
-	  System.out.println(7);
-    element.sendKeys("pushit955");
-	  System.out.println(8);
-    element.submit();
-	  System.out.println(9);
-	  webDriver.get("https://qa.inthinc.com/tiwipro/logout");
-	  System.out.println(10);
-	//  driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "w");
-    System.out.println("testSimple2 " + stringBrowser);
-  }
-
-  @Test
-  public void testSimple3() throws Exception {
-	  webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
-	  ArrayList<String> tabs = new ArrayList<String> (webDriver.getWindowHandles());
-
-	  webDriver.switchTo().window(tabs.get(tabs.size() - 1));
-	  webDriver.get("http://www.google.com");
-    WebElement element = webDriver.findElement(By.id("lst-ib"));
-    element.sendKeys("football");
-    element.submit();
-//	  driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "w");
-    System.out.println("testSimple3 " + stringBrowser);
+        browser.setURL("https://qa.inthinc.com/tiwiproutil/logout");
     }
 
-  @Test
-  public void testSimple4() throws Exception {
-	  webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
-	  ArrayList<String> tabs = new ArrayList<String> (webDriver.getWindowHandles());
+    @Test
+    public void logInConfigurator() throws Exception
+    {
+        browser.setURL("https://qa.inthinc.com/configurator");
+        browser.setText(By.id("username"), "automation");
+        browser.setText(By.id("password"), "password");
+        browser.click(By.xpath("//button[@type='submit']"));
 
-	  webDriver.switchTo().window(tabs.get(tabs.size() - 1));
-	  webDriver.get("http://qa.inthinc.com");
-    WebElement element = webDriver.findElement(By.id("username"));
-    element.sendKeys("schristensen");
-    element = webDriver.findElement(By.id("password"));
-    element.sendKeys("pushit955");
-    element.submit();
-    webDriver.get("https://qa.inthinc.com/tiwipro/logout");
-//	  driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "w");
-    System.out.println("testSimple4 " + stringBrowser);
-  }
+        assertEquals("The Configurator - Edit Single Setting", browser.getTitle());
 
-  @Test
-  public void testSimple5() throws Exception {
-	  webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
-	  ArrayList<String> tabs = new ArrayList<String> (webDriver.getWindowHandles());
+//        browser.setURL("https://qa.inthinc.com/configurator/j_spring_cas_security_logout");
+        browser.setURL("https://qa.inthinc.com/tiwipro/logout");
+    }
 
-	  webDriver.switchTo().window(tabs.get(tabs.size() - 1));
-	  webDriver.get("http://www.google.com");
-    WebElement element = webDriver.findElement(By.id("lst-ib"));
-    element.sendKeys("cats");
-    element.submit();
-    System.out.println("testSimple5 " + stringBrowser);
-  }
+    @Test
+    public void logInKiosk() throws Exception
+    {
+        browser.setURL("https://qa.inthinc.com/hoskiosk");
+        browser.setText(By.id("j_username"), "Automation");
+        browser.setText(By.id("j_password"), "Automation");
+        browser.click(By.id("loginLogin"));
+
+        assertEquals("HOS Driver", browser.getTitle());
+
+        browser.setURL("https://qa.inthinc.com/hoskiosk/logout");
+    }
+
+    @Test
+    public void logInPortal() throws Exception
+    {
+        browser.setURL("https://qa.inthinc.com/tiwipro");
+        browser.setText(By.id("username"), "automation");
+        browser.setText(By.id("password"), "password");
+        browser.click(By.xpath("//button[@type='submit']"));
+
+        assertEquals("Version: 2.5.12-SNAPSHOT 20160613-1836 1244", browser.getText(By.id("footerForm:version")));
+
+        browser.setURL("https://qa.inthinc.com/tiwipro/logout");
+    }
 }

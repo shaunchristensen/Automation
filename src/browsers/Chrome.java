@@ -1,32 +1,16 @@
 package browsers;
 
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
-/**
- * Sub class for Chrome browser.
- * 
- * @author Shaun Christensen
- */
 public class Chrome extends Browser
 {
-    // fields
-    
-    ChromeDriver chromeDriver;
-    ChromeOptions chromeOptions;
-
     // constructors
     
-    /**
-     * Default zero-argument constructor.
-     */
     public Chrome()
     {
-    	chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("start-maximized");
+        System.setProperty("webdriver.chrome.driver", "Resources/Chrome/chromedriver.exe");
 
-        hashtableStrings.put("browser", "Chrome");
-
-        remoteWebDriver = new ChromeDriver(chromeOptions);
+        webDriver = new ChromeDriver();
+        webDriver.manage().window().maximize();
     }
 }

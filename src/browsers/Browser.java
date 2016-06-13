@@ -7,59 +7,51 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.WebElement;
 
-/**
- * Super class for browsers.
- * 
- * @author Shaun Christensen
- */
 public class Browser
 {
     // fields
-    
-    protected RemoteWebDriver remoteWebDriver;
-    private WebElement webElement; 
-    
+
+    protected WebDriver webDriver;
+
     protected final Hashtable<String, String> hashtableStrings = new Hashtable<String, String>();
-    
+
     // constructors
     
     public Browser()
     {
         hashtableStrings.put("screenshots", "C:/Regression/Screenshots/");
         hashtableStrings.put("reports", "C:/Regression/Reports/");
-        hashtableStrings.put("password", "T@k3Th3Wh33l");
+        hashtableStrings.put("password", "password");
         hashtableStrings.put("username", "automation");
         hashtableStrings.put("dashboard", "https://staging.inthinc.com/tiwipro/app/dashboard");
         hashtableStrings.put("logout", "https://staging.inthinc.com/tiwipro/logout");
         hashtableStrings.put("login",  "https://staging.inthinc.com/cas/login");
         hashtableStrings.put("account", "https://staging.inthinc.com/tiwipro/app/account");
-
-        webElement = null;
     }
 
     // methods
     
     public void close()
     {
-        remoteWebDriver.close();        
+        webDriver.close();        
     }
 
     public void quit()
     {
-        remoteWebDriver.quit();
+        webDriver.quit();
     }
 
     public String getURL()
     {
-        return remoteWebDriver.getCurrentUrl();
+        return webDriver.getCurrentUrl();
     }
     
     public void setURL(String URL)
 	{
-	    remoteWebDriver.get(URL);
+        webDriver.get(URL);
 
 	    if (getURL().matches("^" + getString("login") + ".*$"))
 	    {
@@ -69,34 +61,34 @@ public class Browser
     
     public String getTitle()
     {
-        return remoteWebDriver.getTitle();
+        return webDriver.getTitle();
     }
 
     public String getText(By b)
     {
-        return remoteWebDriver.findElement(b).getText();
+        return webDriver.findElement(b).getText();
     }
     
     public void setText(By b, String text)
     {
-        remoteWebDriver.findElement(b).clear();
-        remoteWebDriver.findElement(b).sendKeys(text);
+        webDriver.findElement(b).clear();
+        webDriver.findElement(b).sendKeys(text);
     }
     
     public void click(By b)
     {
-        remoteWebDriver.findElement(b).click();
+        webDriver.findElement(b).click();
     }
     
     public void submit(By b)
     {
-        remoteWebDriver.findElement(b).submit();
+        webDriver.findElement(b).submit();
     }
     
     public void logIn()
     {
-        remoteWebDriver.findElementById("username").sendKeys(getString("username"));
-        remoteWebDriver.findElementById("password").sendKeys(getString("password"));
+        ((RemoteWebDriver) webDriver).findElementById("username").sendKeys(getString("username"));
+        ((RemoteWebDriver) webDriver).findElementById("password").sendKeys(getString("password"));
         
         submit(By.id("password"));
     }
@@ -110,13 +102,13 @@ public class Browser
     {
         for (int i = 0; i < count; i++)
         {
-            remoteWebDriver.findElement(b).sendKeys(k);
+            webDriver.findElement(b).sendKeys(k);
         }
     }
     
     public boolean isDisplayed(By b)
     {
-        return remoteWebDriver.findElement(b).isDisplayed();
+        return webDriver.findElement(b).isDisplayed();
     }
 
     public String getString(String s)
@@ -128,7 +120,7 @@ public class Browser
     {
         try
         {
-            File f = ((TakesScreenshot)remoteWebDriver).getScreenshotAs(OutputType.FILE);           
+            File f = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);           
 
             FileUtils.copyFile(f, new File(getString("screenshots") + "/" + getString("browser") + "/" + s + ".png"));
         }
@@ -140,13 +132,11 @@ public class Browser
     
     public String getValue(By b, String s)
     {
-        return remoteWebDriver.findElement(b).getCssValue(s);        
+        return webDriver.findElement(b).getCssValue(s);        
     }
 
     public String getAttribute(By b, String s)
     {
-        return remoteWebDriver.findElement(b).getAttribute(s);
+        return webDriver.findElement(b).getAttribute(s);
     }
-    
-    
 }
