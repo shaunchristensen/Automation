@@ -11,6 +11,10 @@ public class Firefox extends Browser
      */
     public Firefox()
     {
+// http://www.seleniumhq.org/docs/04_webdriver_advanced.jsp
+        FirefoxProfile firefoxProfile = new FirefoxProfile();    
+        firefoxProfile.setPreference("browser.privatebrowsing.autostart", true);
+
         webDriver = new FirefoxDriver();
         webDriver.manage().window().maximize();
     }

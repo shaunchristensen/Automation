@@ -23,6 +23,7 @@ public class PTest
 	// fields
 
 	private String stringBrowser;
+	private String stringVersion;
 	private Browser browser;
 
 	// constructors
@@ -30,6 +31,7 @@ public class PTest
 	public PTest(String browser)
 	{
 		stringBrowser = browser;
+		stringVersion = "Version: 2.5.12 20160623-2141 330";
 	}
 
 	// methods
@@ -37,7 +39,7 @@ public class PTest
 	@After
 	public void removeThreadLocal()
 	{
-//		Browsers.getBrowsers().removeThreadLocal(stringBrowser);
+		Browsers.getBrowsers().removeThreadLocal(stringBrowser);
 	}
 
 	@AfterClass
@@ -59,55 +61,216 @@ public class PTest
 	}
 
     @Test
-    public void logInUtility() throws Exception
+    public void logInConfiguratorBarrick() throws Exception
     {
-        browser.setURL("https://qa.inthinc.com/tiwiproutil");
-        browser.setText(By.id("j_username"), "automation");
-        browser.setText(By.id("j_password"), "password");
-        browser.click(By.xpath("//button[@type='submit']"));
-
-        assertEquals("inthinc Utilities", browser.getTitle());
-
-        browser.setURL("https://qa.inthinc.com/tiwiproutil/logout");
+        assertEquals("The Configurator - Edit Single Setting", logInConfigurator("https://barrick.inthinc.com"));
     }
 
     @Test
-    public void logInConfigurator() throws Exception
+    public void logInKioskBarrick() throws Exception
     {
-        browser.setURL("https://qa.inthinc.com/configurator");
+        assertEquals("HOS Driver", logInKiosk("https://barrick.inthinc.com"));
+    }
+
+    @Test
+    public void logInPortalBarrick() throws Exception
+    {
+        assertEquals(stringVersion, logInPortal("https://barrick.inthinc.com"));
+    }
+
+    @Test
+    public void logInUtilityBarrick() throws Exception
+    {
+        assertEquals("inthinc Utilities", logInUtility("https://barrick.inthinc.com"));
+    }
+
+    @Test
+    public void logInConfiguratorChevron() throws Exception
+    {
+        assertEquals("The Configurator - Edit Single Setting", logInConfigurator("https://chevron.inthinc.com"));
+    }
+
+    @Test
+    public void logInKioskChevron() throws Exception
+    {
+        assertEquals("HOS Driver", logInKiosk("https://chevron.inthinc.com"));
+    }
+
+    @Test
+    public void logInPortalChevron() throws Exception
+    {
+        assertEquals(stringVersion, logInPortal("https://chevron.inthinc.com"));
+    }
+
+    @Test
+    public void logInUtilityChevron() throws Exception
+    {
+        assertEquals("inthinc Utilities", logInUtility("https://chevron.inthinc.com"));
+    }
+
+    @Test
+    public void logInConfiguratorCintas() throws Exception
+    {
+        assertEquals("The Configurator - Edit Single Setting", logInConfigurator("https://cintas.inthinc.com"));
+    }
+
+    @Test
+    public void logInKioskCintas() throws Exception
+    {
+        assertEquals("HOS Driver", logInKiosk("https://cintas.inthinc.com"));
+    }
+
+    @Test
+    public void logInPortalCintas() throws Exception
+    {
+        assertEquals(stringVersion, logInPortal("https://cintas.inthinc.com"));
+    }
+
+    @Test
+    public void logInUtilityCintas() throws Exception
+    {
+        assertEquals("inthinc Utilities", logInUtility("https://cintas.inthinc.com"));
+    }
+
+    @Test
+    public void logInConfiguratorLDS() throws Exception
+    {
+        assertEquals("The Configurator - Edit Single Setting", logInConfigurator("https://lds.inthinc.com"));
+    }
+
+    @Test
+    public void logInKioskLDS() throws Exception
+    {
+        assertEquals("HOS Driver", logInKiosk("https://lds.inthinc.com"));
+    }
+
+    @Test
+    public void logInPortalLDS() throws Exception
+    {
+        assertEquals(stringVersion, logInPortal("https://lds.inthinc.com"));
+    }
+
+    @Test
+    public void logInUtilityLDS() throws Exception
+    {
+        assertEquals("inthinc Utilities", logInUtility("https://lds.inthinc.com"));
+    }
+
+    @Test
+    public void logInConfiguratorMy() throws Exception
+    {
+        assertEquals("The Configurator - Edit Single Setting", logInConfigurator("https://my.inthinc.com"));
+    }
+
+    @Test
+    public void logInKioskMy() throws Exception
+    {
+        assertEquals("HOS Driver", logInKiosk("https://my.inthinc.com"));
+    }
+
+    @Test
+    public void logInPortalMy() throws Exception
+    {
+        assertEquals(stringVersion, logInPortal("https://my.inthinc.com"));
+    }
+
+    @Test
+    public void logInUtilityMy() throws Exception
+    {
+        assertEquals("inthinc Utilities", logInUtility("https://my.inthinc.com"));
+    }
+
+    @Test
+    public void logInConfiguratorSchlumberger() throws Exception
+    {
+        assertEquals("The Configurator - Edit Single Setting", logInConfigurator("https://schlumberger.inthinc.com"));
+    }
+
+    @Test
+    public void logInKioskSchlumberger() throws Exception
+    {
+        assertEquals("HOS Driver", logInKiosk("https://schlumberger.inthinc.com"));
+    }
+
+    @Test
+    public void logInPortalSchlumberger() throws Exception
+    {
+        assertEquals(stringVersion, logInPortal("https://schlumberger.inthinc.com"));
+    }
+
+    @Test
+    public void logInUtilitySchlumberger() throws Exception
+    {
+        assertEquals("inthinc Utilities", logInUtility("https://schlumberger.inthinc.com"));
+    }
+
+    @Test
+    public void logInConfiguratorWeatherford() throws Exception
+    {
+        assertEquals("The Configurator - Edit Single Setting", logInConfigurator("https://weatherford.inthinc.com"));
+    }
+
+    @Test
+    public void logInKioskWeatherford() throws Exception
+    {
+        assertEquals("HOS Driver", logInKiosk("https://weatherford.inthinc.com"));
+    }
+
+    @Test
+    public void logInPortalWeatherford() throws Exception
+    {
+        assertEquals(stringVersion, logInPortal("https://weatherford.inthinc.com"));
+    }
+
+    @Test
+    public void logInUtilityWeatherford() throws Exception
+    {
+        assertEquals("inthinc Utilities", logInUtility("https://weatherford.inthinc.com"));
+    }
+
+    public String logInConfigurator(String host) throws Exception
+    {
+        browser.setURL(host + "/configurator/j_spring_cas_security_logout");
+        browser.setURL(host + "/configurator");
         browser.setText(By.id("username"), "automation");
-        browser.setText(By.id("password"), "password");
+        browser.setText(By.id("password"), "0ttom@tion");
         browser.click(By.xpath("//button[@type='submit']"));
 
-        assertEquals("The Configurator - Edit Single Setting", browser.getTitle());
-
-//        browser.setURL("https://qa.inthinc.com/configurator/j_spring_cas_security_logout");
-        browser.setURL("https://qa.inthinc.com/tiwipro/logout");
+        browser.takeScreenshot("logInConfigurator");
+        return browser.getTitle();
     }
 
-    @Test
-    public void logInKiosk() throws Exception
+    public String logInKiosk(String host) throws Exception
     {
-        browser.setURL("https://qa.inthinc.com/hoskiosk");
+        browser.setURL(host + "/hoskiosk/logout");
+        browser.setURL(host + "/hoskiosk");
         browser.setText(By.id("j_username"), "Automation");
         browser.setText(By.id("j_password"), "Automation");
         browser.click(By.id("loginLogin"));
 
-        assertEquals("HOS Driver", browser.getTitle());
-
-        browser.setURL("https://qa.inthinc.com/hoskiosk/logout");
+        return browser.getTitle();
     }
 
-    @Test
-    public void logInPortal() throws Exception
+    public String logInPortal(String host) throws Exception
     {
-        browser.setURL("https://qa.inthinc.com/tiwipro");
+        browser.setURL(host + "/tiwipro/logout");
+        browser.setURL(host + "/tiwipro");
         browser.setText(By.id("username"), "automation");
-        browser.setText(By.id("password"), "password");
+        browser.setText(By.id("password"), "0ttom@tion");
         browser.click(By.xpath("//button[@type='submit']"));
 
-        assertEquals("Version: 2.5.12-SNAPSHOT 20160613-1836 1244", browser.getText(By.id("footerForm:version")));
+        browser.takeScreenshot("logInPortal");
+        return browser.getText(By.id("footerForm:version"));
+    }
 
-        browser.setURL("https://qa.inthinc.com/tiwipro/logout");
+    public String logInUtility(String host) throws Exception
+    {
+        browser.setURL(host + "/tiwiproutil/logout");
+        browser.setURL(host + "/tiwiproutil");
+        browser.setText(By.id("j_username"), "automation");
+        browser.setText(By.id("j_password"), "0ttom@tion");
+        browser.click(By.xpath("//button[@type='submit']"));
+
+        return browser.getTitle();
     }
 }

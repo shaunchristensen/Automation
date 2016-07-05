@@ -64,25 +64,25 @@ public class Browser
         return webDriver.getTitle();
     }
 
-    public String getText(By b)
+    public String getText(By by)
     {
-        return webDriver.findElement(b).getText();
+        return webDriver.findElement(by).getText();
     }
     
-    public void setText(By b, String text)
+    public void setText(By by, String text)
     {
-        webDriver.findElement(b).clear();
-        webDriver.findElement(b).sendKeys(text);
+        webDriver.findElement(by).clear();
+        webDriver.findElement(by).sendKeys(text);
     }
     
-    public void click(By b)
+    public void click(By by)
     {
-        webDriver.findElement(b).click();
+        webDriver.findElement(by).click();
     }
     
-    public void submit(By b)
+    public void submit(By by)
     {
-        webDriver.findElement(b).submit();
+        webDriver.findElement(by).submit();
     }
     
     public void logIn()
@@ -98,17 +98,17 @@ public class Browser
         setURL(getString("logout"));
     }
     
-    public void sendKeys(By b, Keys k, int count)
+    public void sendKeys(By by, Keys keys, int count)
     {
         for (int i = 0; i < count; i++)
         {
-            webDriver.findElement(b).sendKeys(k);
+            webDriver.findElement(by).sendKeys(keys);
         }
     }
     
-    public boolean isDisplayed(By b)
+    public boolean isDisplayed(By by)
     {
-        return webDriver.findElement(b).isDisplayed();
+        return webDriver.findElement(by).isDisplayed();
     }
 
     public String getString(String s)
@@ -130,13 +130,13 @@ public class Browser
         }
     }
     
-    public String getValue(By b, String s)
+    public String getValue(By by, String value)
     {
-        return webDriver.findElement(b).getCssValue(s);        
+        return webDriver.findElement(by).getCssValue(value);        
     }
 
-    public String getAttribute(By b, String s)
+    public String getAttribute(By by, String attribute)
     {
-        return webDriver.findElement(b).getAttribute(s);
+        return webDriver.findElement(by).getAttribute(attribute);
     }
 }
