@@ -1,6 +1,8 @@
 package browsers;
 
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class Firefox extends Browser
 {
@@ -11,10 +13,13 @@ public class Firefox extends Browser
      */
     public Firefox()
     {
-// http://www.seleniumhq.org/docs/04_webdriver_advanced.jsp
+/*
         FirefoxProfile firefoxProfile = new FirefoxProfile();    
         firefoxProfile.setPreference("browser.privatebrowsing.autostart", true);
 
+        DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
+        desiredCapabilities.setCapability(FirefoxDriver.PROFILE, firefoxProfile);
+*/
         webDriver = new FirefoxDriver();
         webDriver.manage().window().maximize();
     }

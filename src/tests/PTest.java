@@ -230,7 +230,7 @@ public class PTest
 
     public String logInConfigurator(String host) throws Exception
     {
-        browser.setURL(host + "/configurator/j_spring_cas_security_logout");
+//        browser.setURL(host + "/configurator/j_spring_cas_security_logout");
         browser.setURL(host + "/configurator");
         browser.setText(By.id("username"), "automation");
         browser.setText(By.id("password"), "0ttom@tion");
@@ -242,7 +242,7 @@ public class PTest
 
     public String logInKiosk(String host) throws Exception
     {
-        browser.setURL(host + "/hoskiosk/logout");
+//        browser.setURL(host + "/hoskiosk/logout");
         browser.setURL(host + "/hoskiosk");
         browser.setText(By.id("j_username"), "Automation");
         browser.setText(By.id("j_password"), "Automation");
@@ -253,7 +253,7 @@ public class PTest
 
     public String logInPortal(String host) throws Exception
     {
-        browser.setURL(host + "/tiwipro/logout");
+//        browser.setURL(host + "/tiwipro/logout");
         browser.setURL(host + "/tiwipro");
         browser.setText(By.id("username"), "automation");
         browser.setText(By.id("password"), "0ttom@tion");
@@ -265,7 +265,7 @@ public class PTest
 
     public String logInUtility(String host) throws Exception
     {
-        browser.setURL(host + "/tiwiproutil/logout");
+ //       browser.setURL(host + "/tiwiproutil/logout");
         browser.setURL(host + "/tiwiproutil");
         browser.setText(By.id("j_username"), "automation");
         browser.setText(By.id("j_password"), "0ttom@tion");
