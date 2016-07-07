@@ -1,14 +1,10 @@
 package browsers;
 
-import java.io.File;
-import java.util.Hashtable;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Browser
 {
@@ -16,12 +12,15 @@ public class Browser
 
     protected WebDriver webDriver;
 
-    protected final Hashtable<String, String> hashtableStrings = new Hashtable<String, String>();
+    protected WebElement webElement;
+
+//    protected final Hashtable<String, String> hashtableStrings = new Hashtable<String, String>();
 
     // constructors
     
     public Browser()
     {
+        /*
         hashtableStrings.put("screenshots", "C:/Regression/Screenshots/");
         hashtableStrings.put("reports", "C:/Regression/Reports/");
         hashtableStrings.put("password", "password");
@@ -30,13 +29,39 @@ public class Browser
         hashtableStrings.put("logout", "https://staging.inthinc.com/tiwipro/logout");
         hashtableStrings.put("login",  "https://staging.inthinc.com/cas/login");
         hashtableStrings.put("account", "https://staging.inthinc.com/tiwipro/app/account");
+        */
     }
 
     // methods
     
+    public void click(By by)
+    {
+        setWebElement(by);
+
+        webElement.click();
+    }
+
     public void close()
     {
         webDriver.close();        
+    }
+
+    public String getText(By by)
+    {
+        setWebElement(by);
+
+        return webElement.getText();
+    }
+
+/*
+    public String getTitle()
+    {
+        return webDriver.getTitle();
+    }
+*/
+    public String getURL()
+    {
+        return webDriver.getCurrentUrl();
     }
 
     public void quit()
@@ -44,47 +69,37 @@ public class Browser
         webDriver.quit();
     }
 
-    public String getURL()
+    public void setText(By by, String text)
     {
-        return webDriver.getCurrentUrl();
+        setWebElement(by);
+
+        webElement.clear();
+        webElement.sendKeys(text);
     }
     
     public void setURL(String URL)
-	{
+    {
         webDriver.get(URL);
-
-	    if (getURL().matches("^" + getString("login") + ".*$"))
-	    {
-	        logIn();
-	    }
-	}
-    
-    public String getTitle()
-    {
-        return webDriver.getTitle();
+/*
+        if (getURL().matches("^" + getString("login") + ".*$"))
+        {
+            logIn();
+        }
+*/
     }
 
-    public String getText(By by)
+    protected void setWebElement(By by)
     {
-        return webDriver.findElement(by).getText();
+        webElement = (new WebDriverWait(webDriver, 10)).until(ExpectedConditions.presenceOfElementLocated(by));
     }
-    
-    public void setText(By by, String text)
-    {
-        webDriver.findElement(by).clear();
-        webDriver.findElement(by).sendKeys(text);
-    }
-    
-    public void click(By by)
-    {
-        webDriver.findElement(by).click();
-    }
-    
+
+/*
     public void submit(By by)
     {
+        // fix
         webDriver.findElement(by).submit();
     }
-    
+
     public void logIn()
     {
         ((RemoteWebDriver) webDriver).findElementById("username").sendKeys(getString("username"));
@@ -129,7 +144,8 @@ public class Browser
             System.out.println("Error: Unable to take screenshot. " + e.getMessage());
         }
     }
-    
+*/
+    /*
     public String getValue(By by, String value)
     {
         return webDriver.findElement(by).getCssValue(value);        
@@ -139,4 +155,5 @@ public class Browser
     {
         return webDriver.findElement(by).getAttribute(attribute);
     }
+    */
 }

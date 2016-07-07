@@ -106,14 +106,6 @@ public class Browsers
         });
     }
 
-    public static void quitBrowsers()
-    {
-        browserChrome.quit();
-        browserEdge.quit();
-        browserFirefox.quit();
-        browserInternetExplorer.quit();
-    }
-
     public void removeThreadLocal(String browser)
     {
         if (browser.equalsIgnoreCase("Chrome"))
