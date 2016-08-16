@@ -1,8 +1,10 @@
 package browsers;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -33,35 +35,35 @@ public class Browser
     }
 
     // methods
-    
+
     public void click(By by)
     {
-        setWebElement(by);
-
-        webElement.click();
+        getWebElement(by).click();
     }
 
     public void close()
     {
-        webDriver.close();        
+        webDriver.close();
     }
 
     public String getText(By by)
     {
-        setWebElement(by);
-
-        return webElement.getText();
+        return getWebElement(by).getText();
     }
 
-/*
-    public String getTitle()
-    {
-        return webDriver.getTitle();
-    }
-*/
     public String getURL()
     {
+//        JavascriptExecutor js = (JavascriptExecutor)webDriver;
+//        js.executeScript("alert('hello world');");
+
+//        new WebDriverWait(webDriver, 10).until((ExpectedCondition<Boolean>)wd -> ((JavascriptExecutor)wd).executeScript("return document.readyState").equals("complete"));
+
         return webDriver.getCurrentUrl();
+    }
+
+    protected WebElement getWebElement(By by)
+    {
+        return new WebDriverWait(webDriver, 10).until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
     public void quit()
@@ -71,8 +73,7 @@ public class Browser
 
     public void setText(By by, String text)
     {
-        setWebElement(by);
-
+        webElement = getWebElement(by);
         webElement.clear();
         webElement.sendKeys(text);
     }
@@ -80,17 +81,6 @@ public class Browser
     public void setURL(String URL)
     {
         webDriver.get(URL);
-/*
-        if (getURL().matches("^" + getString("login") + ".*$"))
-        {
-            logIn();
-        }
-*/
-    }
-
-    protected void setWebElement(By by)
-    {
-        webElement = (new WebDriverWait(webDriver, 10)).until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
 /*

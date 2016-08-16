@@ -37,10 +37,12 @@ public class Retry implements TestRule
                     }
                     catch (Throwable t)
                     {
+                        // if t is an assertion error then throw t and quit
                         if (t instanceof AssertionError)
                         {
                             throw t;
                         }
+                        // otherwise set throwable to t and continue
                         else
                         {
                             throwable = t;

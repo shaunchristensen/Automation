@@ -8,6 +8,7 @@ public class InternetExplorer extends Browser
     
 	public InternetExplorer()
 	{
+	    // Version 2.53.1
         System.setProperty("webdriver.ie.driver", "Resources/Internet Explorer/IEDriverServer.exe");
 
         webDriver = new InternetExplorerDriver();

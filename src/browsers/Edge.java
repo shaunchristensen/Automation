@@ -8,6 +8,7 @@ public class Edge extends Browser
     
     public Edge()
     {
+        // Version 3.14393
         System.setProperty("webdriver.edge.driver", "Resources/Edge/MicrosoftWebDriver.exe");
 
         webDriver = new EdgeDriver();

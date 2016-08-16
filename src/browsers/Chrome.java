@@ -8,6 +8,7 @@ public class Chrome extends Browser
     
     public Chrome()
     {
+        // Version 2.23
         System.setProperty("webdriver.chrome.driver", "Resources/Chrome/chromedriver.exe");
 
         webDriver = new ChromeDriver();
