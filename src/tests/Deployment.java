@@ -263,7 +263,7 @@ public class Deployment
         browser.setText(By.id("password"), stringPassword);
         browser.click(By.cssSelector("#fm1 > button"));
 
-        String s = browser.getURL();
+        String s = browser.getURL(url);
 
         System.out.println("\n" + testName.getMethodName() + "\n\nURL\nExpected: " + url + "\nActual: " + s + "\n");
 
@@ -279,7 +279,7 @@ public class Deployment
         browser.setText(By.id("j_password"), Character.toUpperCase(stringUsername.charAt(0)) + stringUsername.substring(1));
         browser.click(By.id("loginLogin"));
 
-        String s = browser.getURL();
+        String s = browser.getURL(url);
 
         System.out.println("\n" + testName.getMethodName() + "\n\nURL\nExpected: " + url + "\nActual: " + s + "\n");
 
@@ -336,7 +336,7 @@ public class Deployment
         browser.setText(By.id("j_password"), stringPassword);
         browser.click(By.id("login_btn"));
 
-        String s = browser.getURL();
+        String s = browser.getURL(url);
 
         System.out.println("\n" + testName.getMethodName() + "\n\nURL\nExpected: " + url + "\nActual: " + s + "\n");
 
