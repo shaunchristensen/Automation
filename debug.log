@@ -1310,3 +1310,49 @@
 [0707/143039:WARNING:process_snapshot_win.cc(102)] ReadMemory ExceptionInformation failed
 [0707/143039:WARNING:crash_report_exception_handler.cc(60)] ProcessSnapshotWin::InitializeException failed
 [0707/143039:ERROR:scoped_process_suspend.cc(38)] NtResumeProcess, ntstatus=-1073741558
+[0907/163739:ERROR:scoped_process_suspend.cc(29)] NtSuspendProcess, ntstatus=-1073741558
+[0907/163739:ERROR:process_info.cc(103)] ReadProcessMemory bool __cdecl crashpad::`anonymous-namespace'::ReadStruct<struct crashpad::process_types::PEB<struct crashpad::process_types::internal::Traits32>>(void *,unsigned __int64,struct crashpad::process_types::PEB<struct crashpad::process_types::internal::Traits32> *): Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
+[0907/163739:ERROR:process_info.cc(542)] ReadProcessData failed
+[0907/163739:ERROR:process_info.cc(608)] range at 0x0, size 0x230 fully unreadable
+[0907/163739:ERROR:process_reader_win.cc(233)] ReadMemory at 0x0 of 560 bytes failed: Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
+[0907/163739:ERROR:process_snapshot_win.cc(359)] ReadMemory PEB
+[0907/163739:ERROR:process_reader_win.cc(233)] ReadMemory at 0x779a5120 of 5888 bytes failed: Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
+[0907/163739:ERROR:process_reader_win.cc(99)] process 7896 not found
+[0907/163739:ERROR:process_reader_win.cc(233)] ReadMemory at 0x95fbb4 of 12 bytes failed: Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
+[0907/163739:WARNING:process_snapshot_win.cc(104)] ReadMemory ExceptionInformation failed
+[0907/163739:WARNING:crash_report_exception_handler.cc(60)] ProcessSnapshotWin::InitializeException failed
+[0907/163739:ERROR:scoped_process_suspend.cc(38)] NtResumeProcess, ntstatus=-1073741558
+[0908/171852:ERROR:process_info.cc(608)] range at 0xfffde000, size 0x230 fully unreadable
+[0908/171852:ERROR:process_reader_win.cc(167)] GetThreadContext: Access is denied. (0x5)
+[0908/171852:ERROR:process_reader_win.cc(114)] NtOpenThread: An invalid Client ID was specified.  (0xc000000b)
+[0908/171852:ERROR:process_reader_win.cc(142)] SuspendThread: Access is denied. (0x5)
+[0908/171852:ERROR:process_reader_win.cc(114)] NtOpenThread: An invalid Client ID was specified.  (0xc000000b)
+[0908/171852:ERROR:process_reader_win.cc(114)] NtOpenThread: An invalid Client ID was specified.  (0xc000000b)
+[0908/171852:ERROR:process_reader_win.cc(114)] NtOpenThread: An invalid Client ID was specified.  (0xc000000b)
+[0908/171852:ERROR:process_reader_win.cc(114)] NtOpenThread: An invalid Client ID was specified.  (0xc000000b)
+[0908/171852:ERROR:process_info.cc(608)] range at 0xfffdd000, size 0xf84 fully unreadable
+[0908/171852:ERROR:process_info.cc(608)] range at 0xfffda000, size 0xf84 fully unreadable
+[0908/171852:ERROR:process_info.cc(608)] range at 0xfffd7000, size 0xf84 fully unreadable
+[0908/171852:ERROR:process_info.cc(608)] range at 0xfffaf000, size 0xf84 fully unreadable
+[0908/171852:ERROR:process_info.cc(608)] range at 0xfffa0000, size 0xf84 fully unreadable
+[0908/171852:ERROR:process_info.cc(608)] range at 0xfffac000, size 0xf84 fully unreadable
+[0908/171852:ERROR:process_info.cc(608)] range at 0xfffa9000, size 0xf84 fully unreadable
+[0908/171852:ERROR:process_info.cc(608)] range at 0xfffa6000, size 0xf84 fully unreadable
+[0908/171852:ERROR:process_info.cc(608)] range at 0xfffa3000, size 0xf84 fully unreadable
+[0908/171852:ERROR:process_info.cc(608)] range at 0xfff9d000, size 0xf84 fully unreadable
+[0908/171852:ERROR:process_info.cc(608)] range at 0xfff9a000, size 0xf84 fully unreadable
+[0908/171852:ERROR:process_info.cc(608)] range at 0xfff97000, size 0xf84 fully unreadable
+[0908/171852:ERROR:exception_snapshot_win.cc(88)] thread ID 8784 not found in process
+[0908/171852:WARNING:crash_report_exception_handler.cc(60)] ProcessSnapshotWin::InitializeException failed
+[0912/151951:ERROR:scoped_process_suspend.cc(29)] NtSuspendProcess, ntstatus=-1073741558
+[0912/151951:ERROR:process_info.cc(103)] ReadProcessMemory bool __cdecl crashpad::`anonymous-namespace'::ReadStruct<struct crashpad::process_types::PEB<struct crashpad::process_types::internal::Traits32>>(void *,unsigned __int64,struct crashpad::process_types::PEB<struct crashpad::process_types::internal::Traits32> *): Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
+[0912/151951:ERROR:process_info.cc(542)] ReadProcessData failed
+[0912/151951:ERROR:process_info.cc(608)] range at 0x0, size 0x230 fully unreadable
+[0912/151951:ERROR:process_reader_win.cc(233)] ReadMemory at 0x0 of 560 bytes failed: Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
+[0912/151951:ERROR:process_snapshot_win.cc(359)] ReadMemory PEB
+[0912/151951:ERROR:process_reader_win.cc(233)] ReadMemory at 0x771f5120 of 5888 bytes failed: Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
+[0912/151951:ERROR:process_reader_win.cc(99)] process 12728 not found
+[0912/151951:ERROR:process_reader_win.cc(233)] ReadMemory at 0x13cfbb4 of 12 bytes failed: Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
+[0912/151951:WARNING:process_snapshot_win.cc(104)] ReadMemory ExceptionInformation failed
+[0912/151951:WARNING:crash_report_exception_handler.cc(60)] ProcessSnapshotWin::InitializeException failed
+[0912/151951:ERROR:scoped_process_suspend.cc(38)] NtResumeProcess, ntstatus=-1073741558

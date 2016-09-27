@@ -42,6 +42,11 @@ public class Browser
         return getWebElement(by).getText();
     }
 
+    public String getTitle()
+    {
+        return webDriver.getTitle();
+    }
+
     public String getURL(String url) throws Exception
     {
         if (getJavaScriptPredicate("window.location.href == '" + url + "'"))

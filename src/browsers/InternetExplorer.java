@@ -1,5 +1,7 @@
 package browsers;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class InternetExplorer extends Browser
@@ -12,6 +14,7 @@ public class InternetExplorer extends Browser
         System.setProperty("webdriver.ie.driver", "Resources/Internet Explorer/IEDriverServer.exe");
 
         webDriver = new InternetExplorerDriver();
+        webDriver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         webDriver.manage().window().maximize();
 	}
 }
