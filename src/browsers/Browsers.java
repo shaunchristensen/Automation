@@ -101,8 +101,8 @@ public class Browsers
         {
             { "Chrome" },
 //            { "Edge" },
-            { "Firefox" },
-            { "Internet Explorer" }
+//            { "Firefox" },
+//            { "Internet Explorer" }
         });
     }
 
