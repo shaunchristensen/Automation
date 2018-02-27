@@ -51,7 +51,7 @@ public class Deployment
 		stringUsername = "automation";
 		stringPassword = "0ttom@tion";
 
-		stringVersion = "Version: 2.6.5 20170801-0037 415";
+		stringVersion = "Version: 2.6.20 20180126-0121 456";
 	}
 
 	// methods
